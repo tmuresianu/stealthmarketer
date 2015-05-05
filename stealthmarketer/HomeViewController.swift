@@ -40,6 +40,8 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         nextbutton?.hidden = true
         
         self.navigationController?.navigationBarHidden = true
+        self.navigationController?.navigationBar.barTintColor = UIColor.blackColor()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGrayColor()]
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style:UIBarButtonItemStyle.Plain, target: nil, action: nil)
     }

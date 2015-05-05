@@ -17,9 +17,15 @@ class HashtagSelectionViewController: UIViewController, UITableViewDataSource, U
     var hashtags:NSArray = []
     var selectedRows:NSMutableArray = []
     var currentTotal:Int = 0
+    var mediaID:String!
     
     @IBAction func postToInstagram () {
         println("postToInstagram called")
+        
+        let instagramURL = "instagram://media?id=\(mediaID)&tag?name=#Test2,#Test3"
+        
+        UIApplication.sharedApplication().openURL(NSURL(string: instagramURL)!)
+        
     }
     
     override func viewDidLoad(){
@@ -32,13 +38,22 @@ class HashtagSelectionViewController: UIViewController, UITableViewDataSource, U
         
     }
     
+    func getPriceStringForAmount(amount:Int) -> String {
+        
+        var centsString = (amount % 100 < 10) ? "\(amount % 100)" : "0\(amount % 100)"
+        
+        return "$\(amount/100).\(centsString)"
+        
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
-        let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+        let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
         
         let currentHashtag:hashtag = hashtags.objectAtIndex(indexPath.row) as! hashtag
 
         cell.textLabel!.text = currentHashtag.text
+        cell.detailTextLabel!.text = getPriceStringForAmount(currentHashtag.price)
         
         if ((selectedRows.objectAtIndex(indexPath.row) as! NSNumber).boolValue == true){
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
@@ -72,6 +87,7 @@ class HashtagSelectionViewController: UIViewController, UITableViewDataSource, U
             currentTotal += selectedHashtag.price
         }
         
+        selectedRows.replaceObjectAtIndex(indexPath.row, withObject: NSNumber(bool: !wasSelected))
         self.tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         
         reloadPrice()
@@ -79,7 +95,7 @@ class HashtagSelectionViewController: UIViewController, UITableViewDataSource, U
     
     func reloadPrice(){
         
-        priceLabel!.text = "$\(currentTotal%100).\(currentTotal/100)"
+        priceLabel!.text = getPriceStringForAmount(currentTotal)
         
     }
 }
@@ -88,5 +104,16 @@ class hashtag {
     
     var text:String = ""
     var price:Int = 0
+    /*
     
+    func hashtag(cost:Int, mytext:String){
+        text = mytext
+        price = cost
+    }
+    
+    override func init( money cost:Int, blah mytext:String) {
+        
+        text = mytext
+        price = cost
+    }*/
 }

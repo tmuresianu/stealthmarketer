@@ -39,7 +39,9 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.title = "Stealth Marketer"
         nextbutton?.hidden = true
         
-        self.navigationController?.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style:UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        self.navigationController?.navigationBarHidden = true
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style:UIBarButtonItemStyle.Plain, target: nil, action: nil)
     }
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {

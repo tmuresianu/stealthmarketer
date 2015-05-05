@@ -26,9 +26,11 @@ class PhotoEditingViewController : UIViewController, UICollectionViewDelegate, U
     
     let COLLECTION_VIEW_CATEGORY_NAME_LABEL_TAG = 1
     let COLLECTION_VIEW_CATEGORY_BACKGROUND_IMAGE_VIEW_TAG = 2
-    let COLLECTION_VIEW_IMAGE_CELL_PICTURE_TAG = 1
-    let COLLECTION_VIEW_IMAGE_CELL_PRICE_LABEL_TAG = 2
+    let COLLECTION_VIEW_IMAGE_CELL_PICTURE_TAG = 2
+    let COLLECTION_VIEW_IMAGE_CELL_PRICE_LABEL_TAG = 1
     let COLLECTION_VIEW_SUB_IMAGE_CELL_PICTURE_TAG = 1
+    
+    let NO_SELECTION = -999
     
     var selectedCategoryIndex:Int = 0
     var selectedBrandIndex:Int = 0
@@ -52,6 +54,7 @@ class PhotoEditingViewController : UIViewController, UICollectionViewDelegate, U
     class subImage {
         var price:String?
         var imageName:String = ""
+        var hashtags:NSArray = []
     }
     
     func loadAdvertisements (){
@@ -60,22 +63,62 @@ class PhotoEditingViewController : UIViewController, UICollectionViewDelegate, U
         let cokeTestAngle:subImage = subImage()
         cokeTestAngle.price = "0.99"
         cokeTestAngle.imageName = "cellPlaceholder"
+        cokeTestAngle.hashtags = ["#Coke", "#ShareACokeWithDad", "#99CentsLimitedTime", "#MyCokeAddiction"]
         
         let cokeTestAngle2:subImage = subImage()
-        cokeTestAngle.price = "0.99"
-        cokeTestAngle.imageName = "cellPlaceholder"
+        cokeTestAngle2.price = "0.99"
+        cokeTestAngle2.imageName = "cellPlaceholder"
         
         let cokeBrand:brand = brand()
-        cokeBrand.imageName = "cellPlaceholder"
+        cokeBrand.imageName = "sprite"
         cokeBrand.price = "0.40"
         cokeBrand.subImages = [cokeTestAngle, cokeTestAngle2]
         
+        
+        //--
+        
+        let molsonTestAngle:subImage = subImage()
+        molsonTestAngle.price = "0.99"
+        molsonTestAngle.imageName = "cellPlaceholder"
+        molsonTestAngle.hashtags = ["#molson", "#ShareAmolsonWithDad", "#99CentsLimitedTime", "#MymolsonAddiction"]
+        
+        let molsonTestAngle2:subImage = subImage()
+        molsonTestAngle.price = "0.99"
+        molsonTestAngle.imageName = "cellPlaceholder"
+        
+        let molsonBrand:brand = brand()
+        molsonBrand.imageName = "shasta"
+        molsonBrand.price = "0.40"
+        molsonBrand.subImages = [molsonTestAngle, molsonTestAngle2]
+        
         let foodCategory:category = category()
         foodCategory.name = "Food"
-        foodCategory.brands = [cokeBrand]
-        foodCategory.imageName = "cellPlaceholder"
+        foodCategory.brands = [cokeBrand, molsonBrand]
+        foodCategory.imageName = "fork-and-knife"
         
-        categories = [foodCategory]
+        //--
+        
+        
+        let jetskiTestAngle:subImage = subImage()
+        jetskiTestAngle.price = "0.99"
+        jetskiTestAngle.imageName = "cellPlaceholder"
+        jetskiTestAngle.hashtags = ["#jetski", "#ShareAjetskiWithDad", "#99CentsLimitedTime", "#MyjetskiAddiction"]
+        
+        let jetskiTestAngle2:subImage = subImage()
+        jetskiTestAngle.price = "0.99"
+        jetskiTestAngle.imageName = "cellPlaceholder"
+        
+        let jetskiBrand:brand = brand()
+        jetskiBrand.imageName = "cellPlaceholder"
+        jetskiBrand.price = "0.50"
+        jetskiBrand.subImages = [jetskiTestAngle, jetskiTestAngle2]
+        
+        let natureCategory:category = category()
+        natureCategory.name = "Nature"
+        natureCategory.brands = [jetskiBrand]
+        natureCategory.imageName = "hand-sun"
+        
+        categories = [foodCategory, natureCategory]
         
     }
     
@@ -84,6 +127,14 @@ class PhotoEditingViewController : UIViewController, UICollectionViewDelegate, U
         println("nextButtonPushed called")
         
         
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    
+    if (segue.identifier == "ShowHashtagSelectionViewController"){
+        
+    }
     }
     
     override func viewDidLoad(){
@@ -91,6 +142,12 @@ class PhotoEditingViewController : UIViewController, UICollectionViewDelegate, U
         super.viewDidLoad()
         
         self.photoView.image = self.image
+        
+        self.navigationController?.navigationBarHidden = false
+        //categoryCollectionView.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0)
+        //categoryCollectionView.invalidateIntrinsicContentSize()
+        //.itemSize = categoryCollectionView.frame.size
+        //categoryCollectionView.collectionViewLayout.invalidateLayout()
         
         loadAdvertisements()
         
@@ -163,8 +220,8 @@ class PhotoEditingViewController : UIViewController, UICollectionViewDelegate, U
         
         //println("COllection view category name label tag: \(COLLECTION_VIEW_CATEGORY_NAME_LABEL_TAG)")
         
-        let nameLabel:UILabel = cell.viewWithTag(COLLECTION_VIEW_CATEGORY_NAME_LABEL_TAG) as! UILabel
-        nameLabel.text = (categories.objectAtIndex(indexPath.row) as! category).name
+        //let nameLabel:UILabel = cell.viewWithTag(COLLECTION_VIEW_CATEGORY_NAME_LABEL_TAG) as! UILabel
+        //nameLabel.text = (categories.objectAtIndex(indexPath.row) as! category).name
         
         let imageName:String = (categories.objectAtIndex(indexPath.row) as! category).imageName!
     
@@ -190,8 +247,40 @@ class PhotoEditingViewController : UIViewController, UICollectionViewDelegate, U
         }
         
     }
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
+        
+        println("didSelectItemAtIndexPath Row: \(indexPath.section) Index: \(indexPath.row)")
+        
+        switch (collectionView.tag){
+            case COLLECTION_VIEW_CATEGORY:
+                selectedCategoryIndex = indexPath.row
+                selectedBrandIndex = 0
+                selectedAngleIndex = 0
+                self.brandCollectionView.reloadData()
+                self.subImageCollectionView.reloadData()
+                break
+            case COLLECTION_VIEW_IMAGE:
+                selectedBrandIndex = indexPath.row
+                selectedAngleIndex = 0
+                self.subImageCollectionView.reloadData()
+                break
+            case COLLECTION_VIEW_SUB_IMAGE:
+                self.insertAdIntoImage()
+                break
+        default:
+            break
+        }
         
     }
     
+    
+    func insertAdIntoImage(){
+        
+        println("insertAdIntoImage")
+        
+    }
+    
+    
+
 }

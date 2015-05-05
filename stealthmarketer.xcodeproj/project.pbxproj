@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8292CE721AF5535600314696 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8292CE711AF5535600314696 /* AppDelegate.swift */; };
-		8292CE741AF5535600314696 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8292CE731AF5535600314696 /* ViewController.swift */; };
 		8292CE771AF5535600314696 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8292CE751AF5535600314696 /* Main.storyboard */; };
 		8292CE791AF5535600314696 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8292CE781AF5535600314696 /* Images.xcassets */; };
 		8292CE7C1AF5535600314696 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8292CE7A1AF5535600314696 /* LaunchScreen.xib */; };
@@ -32,7 +31,6 @@
 		8292CE6C1AF5535600314696 /* stealthmarketer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stealthmarketer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8292CE701AF5535600314696 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8292CE711AF5535600314696 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8292CE731AF5535600314696 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8292CE761AF5535600314696 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8292CE781AF5535600314696 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8292CE7B1AF5535600314696 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				8292CE711AF5535600314696 /* AppDelegate.swift */,
-				8292CE731AF5535600314696 /* ViewController.swift */,
 				8292CE751AF5535600314696 /* Main.storyboard */,
 				8292CE931AF55C1700314696 /* HashtagSelectionViewController.swift */,
 				8292CE951AF55CE400314696 /* PhotoEditingViewController.swift */,
@@ -222,7 +219,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8292CE941AF55C1700314696 /* HashtagSelectionViewController.swift in Sources */,
-				8292CE741AF5535600314696 /* ViewController.swift in Sources */,
 				8292CE961AF55CE400314696 /* PhotoEditingViewController.swift in Sources */,
 				8292CE721AF5535600314696 /* AppDelegate.swift in Sources */,
 				8292CE921AF5546F00314696 /* HomeViewController.swift in Sources */,
@@ -423,6 +419,7 @@
 				8292CE8D1AF5535600314696 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8292CE8E1AF5535600314696 /* Build configuration list for PBXNativeTarget "stealthmarketerTests" */ = {
 			isa = XCConfigurationList;
@@ -431,6 +428,7 @@
 				8292CE901AF5535600314696 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
